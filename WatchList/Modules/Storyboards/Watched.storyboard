@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4zw-nk-nZD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4zw-nk-nZD">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -29,7 +29,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="3DL-P9-QEk"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Watched" id="LbN-V2-CbI"/>
+                    <navigationItem key="navigationItem" title="Watched" id="LbN-V2-CbI">
+                        <barButtonItem key="rightBarButtonItem" image="ellipsis" catalog="system" id="v4F-2M-NMA">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="onMoreButtonTouchUpInside:" destination="M4a-9K-KKp" id="BCU-wR-7hG"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="SjA-Hm-FOL" id="flw-6v-Gp6"/>
                     </connections>
@@ -57,4 +64,7 @@
             <point key="canvasLocation" x="111.59420289855073" y="124.55357142857142"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ellipsis" catalog="system" width="128" height="37"/>
+    </resources>
 </document>

@@ -27,6 +27,31 @@ class WatchedView: UIViewController, WatchedViewProtocol {
     
     // MARK: - Instance Methods
     
+    private func presentMediaTypePicker() {
+        
+    }
+    
+    private func presentMoreOptionsAlert() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let addAction = UIAlertAction(title: "Add", style: .default, handler: { [weak self] _ in
+            let searchStoryboard = UIStoryboard(name: "Search", bundle: nil)
+            guard let searchController = searchStoryboard.instantiateInitialViewController() else {
+                return
+            }
+            
+            self?.present(searchController, animated: true, completion: nil)
+        })
+        
+        alertController.addAction(addAction)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    // MARK: -
+    
     private func configureTableView() {
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -48,6 +73,13 @@ class WatchedView: UIViewController, WatchedViewProtocol {
     private func configureMediaItemCell(cell: MediaItemCell) {
         cell.selectionStyle = .none
     }
+    
+    // MARK: -
+    
+    @IBAction private func onMoreButtonTouchUpInside(_ sender: UIBarButtonItem) {
+        self.presentMoreOptionsAlert()
+    }
+    
     
     // MARK: - UIViewController
     
@@ -105,6 +137,16 @@ extension WatchedView: UITableViewDelegate {
             
         default:
             return 170.0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 0:
+            self.presentMediaTypePicker()
+            
+        default:
+            return
         }
     }
 }

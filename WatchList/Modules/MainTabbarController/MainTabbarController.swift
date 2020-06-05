@@ -27,7 +27,7 @@ class MainTabbarController: UITabBarController {
         let watchedStoryboard = UIStoryboard(name: "Watched", bundle: nil)
         let watchedNavController = watchedStoryboard.instantiateInitialViewController() as? UINavigationController
         let watchedView = watchedNavController?.viewControllers.first
-        let watchedTabbarItem = UITabBarItem(title: "Tree", image: watchedIcon, tag: TabBarItemType.watched.rawValue)
+        let watchedTabbarItem = UITabBarItem(title: "Watched", image: watchedIcon, tag: TabBarItemType.watched.rawValue)
         watchedView?.tabBarItem = watchedTabbarItem
         
         let wishListStoryboard = UIStoryboard(name: "WishList", bundle: nil)
