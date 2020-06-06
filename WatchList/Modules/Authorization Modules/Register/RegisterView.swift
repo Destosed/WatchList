@@ -1,9 +1,9 @@
 import Foundation
-import UIKit
 import TextFieldEffects
 import PromiseKit
+import UIKit
 
-class LoginView: UIViewController {
+class RegisterView: UIViewController {
     
     // MARK: - Nested Types
     
@@ -20,24 +20,29 @@ class LoginView: UIViewController {
     
     @IBOutlet private weak var logoImageView: UIImageView!
     @IBOutlet private weak var loginTextField: YoshikoTextField!
+    @IBOutlet private weak var emailTextField: YoshikoTextField!
     @IBOutlet private weak var passwordTextField: YoshikoTextField!
-    @IBOutlet private weak var loginButton: UIButton!
+    @IBOutlet private weak var registerButton: UIButton!
     @IBOutlet private weak var loginButtonBottomConstraint: NSLayoutConstraint!
     
     // MARK: - Instance Methods
     
-    @IBAction private func onGoToRegisterButtonTouchUpInside(_ sender: UIButton) {
+    @IBAction private func onGoToLoginButtonTouchUpInside(_ sender: UIButton) {
         let authStoryboard = UIStoryboard(name: "Authorization", bundle: nil)
-        let registerView = authStoryboard.instantiateViewController(identifier: "RegisterView") as! RegisterView
-        UIApplication.setRootView(registerView)
+        let loginView = authStoryboard.instantiateViewController(identifier: "LoginView") as! LoginView
+        UIApplication.setRootView(loginView)
     }
     
-    @IBAction private func onLoginButtonTouchUpInside(_ sender: UIButton) {
-        guard let login = loginTextField.text, let password = passwordTextField.text else {
+    @IBAction private func onRegisterButtonTouchUpInside(_ sender: UIButton) {
+        guard let login = self.loginTextField.text,
+            let password = self.passwordTextField.text,
+            let email = self.emailTextField.text else {
             return
         }
         
         firstly {
+            NetworkManager.shared.registerUser(login: login, email: email, password: password)
+        }.then {
             NetworkManager.shared.authorizeUser(login: login, password: password)
         }.done {
             self.navigateToWatchedView()
@@ -73,6 +78,7 @@ class LoginView: UIViewController {
     
     @objc private func hideKeyboard() {
         self.loginTextField.endEditing(true)
+        self.emailTextField.endEditing(true)
         self.passwordTextField.endEditing(true)
     }
     
@@ -103,7 +109,7 @@ class LoginView: UIViewController {
     // MARK: -
     
     private func configureInterface() {
-        self.loginButton.layer.cornerRadius = Constants.cornerRadius
+        self.registerButton.layer.cornerRadius = Constants.cornerRadius
         
         self.loginTextField.layer.cornerRadius = Constants.cornerRadius
         self.loginTextField.activeBorderColor = Colors.mainColor
@@ -120,6 +126,14 @@ class LoginView: UIViewController {
         self.passwordTextField.placeholderFontScale = 0.7
         self.passwordTextField.placeholderColor = .lightGray
         self.passwordTextField.borderSize = 0
+        
+        self.emailTextField.layer.cornerRadius = Constants.cornerRadius
+        self.emailTextField.activeBorderColor = Colors.mainColor
+        self.emailTextField.inactiveBorderColor = .clear
+        self.emailTextField.activeBackgroundColor = .clear
+        self.emailTextField.placeholderFontScale = 0.7
+        self.emailTextField.placeholderColor = .lightGray
+        self.emailTextField.borderSize = 0
         
         let viewTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.hideKeyboard))
         self.view.addGestureRecognizer(viewTapGesture)

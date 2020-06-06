@@ -48,7 +48,7 @@ class SearchView: UIViewController {
             self.tableView.reloadData()
             
             firstly {
-                MovieNetworkManager.shared.getMovies(with: searchText)
+                NetworkManager.shared.getMovies(with: searchText)
             }.done { movies in
                 self.movies = movies
             }.ensure {
