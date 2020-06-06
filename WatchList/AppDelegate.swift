@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  WatchList
-//
-//  Created by Никита Лужбин on 24.02.2020.
-//  Copyright © 2020 Никита. All rights reserved.
-//
-
 import UIKit
 import CoreData
 

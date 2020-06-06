@@ -10,5 +10,6 @@ target 'WatchList' do
   pod 'Gloss', '~> 2.0'
   pod 'PromiseKit', '~> 6.0'
   pod 'Kingfisher', '~> 4.0'
+  pod 'TextFieldEffects'
 
 end

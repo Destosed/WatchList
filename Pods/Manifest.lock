@@ -11,12 +11,14 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/UIKit (6.13.1):
     - PromiseKit/CorePromise
+  - TextFieldEffects (1.6.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.9.0)
   - Gloss (~> 2.0)
   - Kingfisher (~> 4.0)
   - PromiseKit (~> 6.0)
+  - TextFieldEffects
 
 SPEC REPOS:
   trunk:
@@ -24,13 +26,15 @@ SPEC REPOS:
     - Gloss
     - Kingfisher
     - PromiseKit
+    - TextFieldEffects
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   Gloss: 9df15229b2f6484c14752a738474fd2528b4c5cd
   Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
+  TextFieldEffects: 529b8aff706fb40f82c41c780c0777941a893796
 
-PODFILE CHECKSUM: 3c754519aaabd7df91d11944971c53baf26caaa0
+PODFILE CHECKSUM: 50eeea75b7e3ecbc4c31972bc5f52cfb7c6e97df
 
 COCOAPODS: 1.8.4
