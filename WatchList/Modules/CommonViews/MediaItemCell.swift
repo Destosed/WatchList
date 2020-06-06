@@ -52,6 +52,16 @@ class MediaItemCell: UITableViewCell {
         }
     }
     
+    var imageViewTarget: UIImageView {
+        get {
+            return self.posterImageView
+        }
+        
+        set {
+            self.posterImageView = newValue
+        }
+    }
+    
     var note: String? {
         get {
             return self.noteLabel.text

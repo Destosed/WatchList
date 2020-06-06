@@ -1,12 +1,5 @@
-//
-//  WatchedView.swift
-//  WatchList
-//
-//  Created by Никита Лужбин on 20.05.2020.
-//  Copyright © 2020 Никита. All rights reserved.
-//
-
 import Foundation
+import Kingfisher
 import UIKit
 
 class WatchedView: UIViewController, WatchedViewProtocol {
@@ -23,7 +16,9 @@ class WatchedView: UIViewController, WatchedViewProtocol {
     
     // MARK: - Instance Properties
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
+    
+    private var movies: [MovieInfo] = []
     
     // MARK: - Instance Methods
     
@@ -37,8 +32,14 @@ class WatchedView: UIViewController, WatchedViewProtocol {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let addAction = UIAlertAction(title: "Add", style: .default, handler: { [weak self] _ in
             let searchStoryboard = UIStoryboard(name: "Search", bundle: nil)
-            guard let searchController = searchStoryboard.instantiateInitialViewController() else {
+            
+            guard let searchController = searchStoryboard.instantiateInitialViewController() as? SearchView else {
                 return
+            }
+            
+            searchController.onMovieCellSelected = { movie in
+                self?.movies.append(movie)
+                self?.tableView.reloadData()
             }
             
             self?.present(searchController, animated: true, completion: nil)
@@ -70,8 +71,22 @@ class WatchedView: UIViewController, WatchedViewProtocol {
         cell.selectionStyle = .none
     }
     
-    private func configureMediaItemCell(cell: MediaItemCell) {
+    private func configureMediaItemCell(cell: MediaItemCell, with movie: MovieInfo) {
         cell.selectionStyle = .none
+        
+        cell.title = movie.ruName
+        cell.subTitle = movie.engName
+        cell.note = movie.description
+        
+        if let intRating = Int(movie.rating ?? "") {
+            cell.rating = Double(intRating)
+        }
+        
+        if let imageURL = URL(string: movie.posterURL ?? "") {
+            let resource = ImageResource(downloadURL: imageURL,
+                                         cacheKey: movie.posterURL)
+            cell.imageViewTarget.kf.setImage(with: resource)
+        }
     }
     
     // MARK: -
@@ -105,7 +120,7 @@ extension WatchedView: UITableViewDataSource {
         case 0:
             return 1
         default:
-            return 4
+            return self.movies.count
         }
     }
     
@@ -116,10 +131,13 @@ extension WatchedView: UITableViewDataSource {
             self.configureMediaTypeCell(cell: cell)
             return cell
             
-        default:
+        case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: Constants.mediaItemCell) as! MediaItemCell
-            self.configureMediaItemCell(cell: cell)
+            self.configureMediaItemCell(cell: cell, with: self.movies[indexPath.row])
             return cell
+            
+        default:
+            fatalError()
         }
     }
 }

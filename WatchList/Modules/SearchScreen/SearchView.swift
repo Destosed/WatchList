@@ -21,6 +21,10 @@ class SearchView: UIViewController {
     private var isLoading = false
     private var movies: [MovieInfo] = []
     
+    // MARK: -
+    
+    var onMovieCellSelected: ((_ movie: MovieInfo) -> ())?
+    
     // MARK: - Instance Methods
     
     private func configureTableView() {
@@ -35,7 +39,9 @@ class SearchView: UIViewController {
     
     // MARK: -
     
-    func configure(cell: SearchCell) {
+    private func configure(cell: SearchCell) {
+        cell.selectionStyle = .none
+        
         cell.onSearchButtonTouchUpInside = { searchText in
             
             self.isLoading = true
@@ -54,13 +60,14 @@ class SearchView: UIViewController {
         }
     }
     
-    func configure(cell: SearchResultCell, with movieInfo: MovieInfo) {
+    private func configure(cell: SearchResultCell, with movieInfo: MovieInfo) {
         cell.ruNameText = movieInfo.ruName
         cell.engNameText = movieInfo.engName
     }
     
-    func configure(cell: LoadingCell) {
+    private func configure(cell: LoadingCell) {
         cell.isLoading = self.isLoading
+        cell.selectionStyle = .none
     }
     
     // MARK: - UIViewController
@@ -127,4 +134,13 @@ extension SearchView: UITableViewDelegate {
     
     // MARK: - Instance Methods
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        if indexPath.section == 1 {
+            let movie = self.movies[indexPath.row]
+            self.onMovieCellSelected?(movie)
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
 }
