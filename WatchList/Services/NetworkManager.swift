@@ -104,6 +104,49 @@ class NetworkManager {
         }
     }
     
+    func getMovies(category: Category, filterType: FilterType,
+                   searchString: String? = nil, page: Int = 1, itemsPerPage: Int = 100) -> Promise<[MovieInfo]> {
+        
+        let baseURL = "https://watchlist.procrastineyaz.dev/api/items"
+        let parameters: Parameters = ["category": category.rawValue,
+                                      "filter": filterType.rawValue,
+                                      "page": page,
+                                      "itemsPerPage": itemsPerPage]
+        
+        var headers: HTTPHeaders = ["accept": "application/json"]
+        if let token = self.token {
+            headers["Authorization"] = "Bearer \(token)"
+        }
+        
+        return Promise<[MovieInfo]> { seal in
+            Alamofire.request(baseURL, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+                
+                switch response.result {
+                case .failure(let error):
+                    seal.reject(error)
+                    
+                case .success(let result):
+                    guard let json = result as? JSON else {
+                        //TODO: - Нормально обработать
+                        fatalError()
+                    }
+                    guard let moviesArrayJSON: [JSON] = "items" <~~ json else {
+                        fatalError()
+                    }
+                    
+                    var movies: [MovieInfo] = []
+                    
+                    for movieJSON in moviesArrayJSON {
+                        let movieInfo = MovieInfo(json: movieJSON)
+                        movies.append(movieInfo)
+                    }
+                    
+                    seal.fulfill(movies)
+                }
+            }
+        }
+    }
+    
     func getRecomendationMovies() -> Promise<[MovieInfo]> {
         let baseURL = "https://watchlist.procrastineyaz.dev/api/recommendations"
         
@@ -115,7 +158,7 @@ class NetworkManager {
         let parameters: Parameters = [:]
         
         return Promise<[MovieInfo]> { seal in
-            Alamofire.request(baseURL, method: .get, parameters: parameters, headers: headers).responseJSON { response in
+            Alamofire.request(baseURL, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
                 
                 switch response.result {
                 case .failure(let error):
