@@ -16,9 +16,9 @@ class MainTabbarController: UITabBarController {
     
     // MARK: - Instance Properties
     
-    private let watchedIcon = UIImage(named: "Tabbar-Home-Icon")
-    private let wishListIcon = UIImage(named: "Tabbar-Home-Icon")
-    private let recomendationsIcon = UIImage(named: "Tabbar-Home-Icon")
+    private let watchedIcon = UIImage(named: "Tabbar-Watched-Icon")
+    private let wishListIcon = UIImage(named: "Tabbar-Wishlist-Icon")
+    private let recomendationsIcon = UIImage(named: "Tabbar-Trends-Icon")
     private let profileIcon = UIImage(named: "Tabbar-Profile-Icon")
     
     // MARK: - Instance Methods
@@ -60,7 +60,7 @@ class MainTabbarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tabBar.tintColor = .black
+        self.tabBar.tintColor = Colors.mainColor
         
         initViewControllers()
     }
