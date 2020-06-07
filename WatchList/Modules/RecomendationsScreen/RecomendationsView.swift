@@ -132,4 +132,9 @@ extension RecomendationsView: UITableViewDataSource {
 
 extension RecomendationsView: UITableViewDelegate {
     
+    // MARK: - Instance Methods
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 170.0
+    }
 }

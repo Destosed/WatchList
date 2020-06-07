@@ -65,7 +65,7 @@ class NetworkManager {
     
     //MARK: -
     
-    func getMovies(with keyword: String) -> Promise<[MovieInfo]> {
+    func searchMovies(with keyword: String) -> Promise<[MovieInfo]> {
         let baseURL = "https://watchlist.procrastineyaz.dev/api/kinopoisk/search"
         
         var headers: HTTPHeaders = ["accept": "application/json"]
