@@ -1,5 +1,6 @@
 import Foundation
 import Kingfisher
+import PromiseKit
 import UIKit
 
 class WatchedView: UIViewController, WatchedViewProtocol {
@@ -30,7 +31,7 @@ class WatchedView: UIViewController, WatchedViewProtocol {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        let addAction = UIAlertAction(title: "Add", style: .default, handler: { [weak self] _ in
+        let addAction = UIAlertAction(title: "Add", style: .default, handler: { _ in
             let searchStoryboard = UIStoryboard(name: "Search", bundle: nil)
             
             guard let searchController = searchStoryboard.instantiateInitialViewController() as? SearchView else {
@@ -38,17 +39,38 @@ class WatchedView: UIViewController, WatchedViewProtocol {
             }
             
             searchController.onMovieCellSelected = { movie in
-                self?.movies.append(movie)
-                self?.tableView.reloadData()
+                firstly {
+                    NetworkManager.shared.postMovie(movieID: movie.id!, note: " ", rating: 5, seen: true)
+                }.done {
+                    self.movies.append(movie)
+                    self.tableView.reloadData()
+                }.catch { error in
+                    AlertService.shared.showError(on: self,
+                                                  title: "Error",
+                                                  message: error.localizedDescription,
+                                                  complition: nil)
+                }
             }
             
-            self?.present(searchController, animated: true, completion: nil)
+            self.present(searchController, animated: true, completion: nil)
         })
         
         alertController.addAction(addAction)
         alertController.addAction(cancelAction)
         
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    private func fetchMovies() {
+        firstly {
+            NetworkManager.shared.getMovies(category: .all, filterType: .watched)
+        }.done { movies in
+            self.movies = movies
+        }.ensure {
+            self.tableView.reloadData()
+        }.catch { error in
+            AlertService.shared.showError(on: self, title: "Error", message: error.localizedDescription, complition: nil)
+        }
     }
     
     // MARK: -
@@ -101,6 +123,7 @@ class WatchedView: UIViewController, WatchedViewProtocol {
         super.viewDidLoad()
         
         self.configureTableView()
+        self.fetchMovies()
     }
 }
 

@@ -46,7 +46,7 @@ class WishListView: UIViewController {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        let addAction = UIAlertAction(title: "Add", style: .default, handler: { [weak self] _ in
+        let addAction = UIAlertAction(title: "Add", style: .default, handler: { _ in
             let searchStoryboard = UIStoryboard(name: "Search", bundle: nil)
             
             guard let searchController = searchStoryboard.instantiateInitialViewController() as? SearchView else {
@@ -54,10 +54,20 @@ class WishListView: UIViewController {
             }
             
             searchController.onMovieCellSelected = { movie in
-                
+                firstly {
+                    NetworkManager.shared.postMovie(movieID: movie.id!, note: " ", rating: 5, seen: false)
+                }.done {
+                    self.movies.append(movie)
+                    self.tableView.reloadData()
+                }.catch { error in
+                    AlertService.shared.showError(on: self,
+                                                  title: "Error",
+                                                  message: error.localizedDescription,
+                                                  complition: nil)
+                }
             }
             
-            self?.present(searchController, animated: true, completion: nil)
+            self.present(searchController, animated: true, completion: nil)
         })
         
         alertController.addAction(addAction)

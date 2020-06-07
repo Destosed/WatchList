@@ -14,6 +14,7 @@ struct MovieInfo {
     
     // MARK: - Type Properties
     
+    let id: Int?
     let ruName: String?
     let engName: String?
     let year: String?
@@ -26,6 +27,7 @@ struct MovieInfo {
     // MARK: - Initializators
     
     init(json: JSON) {
+        self.id = "id" <~~ json
         self.ruName = "nameRu" <~~ json
         self.engName = "nameEn" <~~ json
         self.year = "year" <~~ json

@@ -185,4 +185,30 @@ class NetworkManager {
             }
         }
     }
+    
+    func postMovie(movieID: Int, note: String, rating: Int, seen: Bool) -> Promise<Void> {
+        let baseURL = "https://watchlist.procrastineyaz.dev/api/items"
+        let parameters: Parameters = ["itemId": movieID,
+                                      "note": note,
+                                      "rating": rating,
+                                      "seen": seen]
+        
+        var headers: HTTPHeaders = ["accept": "application/json"]
+        if let token = self.token {
+            headers["Authorization"] = "Bearer \(token)"
+        }
+        
+        return Promise<Void> { seal in
+            Alamofire.request(baseURL, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
+                
+                switch response.result {
+                case .failure(let error):
+                    seal.reject(error)
+                    
+                case .success:
+                    seal.fulfill(())
+                }
+            }
+        }
+    }
 }
