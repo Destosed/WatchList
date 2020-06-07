@@ -4,8 +4,8 @@ enum Category: String {
     
     //Enumeration Cases
     
-    case all
-    case film
-    case series
-    case anime
+    case all = "All"
+    case film = "Film"
+    case series = "Series"
+    case anime = "Anime"
 }

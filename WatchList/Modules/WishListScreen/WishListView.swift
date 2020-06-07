@@ -10,6 +10,7 @@ class WishListView: UIViewController {
         
         // MARK: - Type Properties
         
+        static let mediaTypeCell = "MediaTypeCell"
         static let mediaItemCell = "MediaItemCell"
     }
     
@@ -19,11 +20,44 @@ class WishListView: UIViewController {
     
     private var refreshControl = UIRefreshControl()
     private var movies: [MovieInfo] = []
+    private var filteredMovies: [MovieInfo] = []
+    private var category: Category = .all {
+        didSet {
+            self.tableView.reloadSections(IndexSet(integer: 0), with: .none)
+            //TODO: - Add filtration
+        }
+    }
     
     // MARK: - Insatnce Methods
     
     @IBAction private func onMoreButtonTouchUpInside(_ sender: Any) {
         self.presentMoreOptionsAlert()
+    }
+    
+    private func presentMediaTypePicker() {
+        let alertController = UIAlertController(title: "Media Type", message: nil, preferredStyle: .actionSheet)
+        
+        let allAction = UIAlertAction(title: "All", style: .default, handler: { _ in
+            self.category = .all
+        })
+        let filmAction = UIAlertAction(title: "Film", style: .default, handler: { _ in
+            self.category = .film
+        })
+        let seriesAction = UIAlertAction(title: "Series", style: .default, handler: { _ in
+            self.category = .series
+        })
+        let animeAction = UIAlertAction(title: "Anime", style: .default, handler: { _ in
+            self.category = .anime
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alertController.addAction(allAction)
+        alertController.addAction(filmAction)
+        alertController.addAction(seriesAction)
+        alertController.addAction(animeAction)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true, completion: nil)
     }
     
     // MARK: -
@@ -86,10 +120,18 @@ class WishListView: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
+        let nibMediaTypeCell = UINib(nibName: Constants.mediaTypeCell, bundle: nil)
+        self.tableView.register(nibMediaTypeCell, forCellReuseIdentifier: Constants.mediaTypeCell)
+        
         let nibMediaItemCell = UINib(nibName: Constants.mediaItemCell, bundle: nil)
         self.tableView.register(nibMediaItemCell, forCellReuseIdentifier: Constants.mediaItemCell)
         
         self.tableView.separatorStyle = .none
+    }
+    
+    private func configureMediaTypeCell(cell: MediaTypeCell) {
+        cell.selectionStyle = .none
+        cell.category = self.category
     }
     
     private func configureMediaItemCell(cell: MediaItemCell, with movie: MovieInfo) {
@@ -134,17 +176,33 @@ extension WishListView: UITableViewDataSource {
     // MARK: - Instance Methods
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.movies.count
+        switch section {
+        case 0:
+            return 1
+        default:
+            return self.movies.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.mediaItemCell) as! MediaItemCell
-        self.configureMediaItemCell(cell: cell, with: self.movies[indexPath.row])
-        return cell
+        switch indexPath.section {
+        case 0:
+            let cell = tableView.dequeueReusableCell(withIdentifier: Constants.mediaTypeCell) as! MediaTypeCell
+            self.configureMediaTypeCell(cell: cell)
+            return cell
+            
+        case 1:
+            let cell = tableView.dequeueReusableCell(withIdentifier: Constants.mediaItemCell) as! MediaItemCell
+            self.configureMediaItemCell(cell: cell, with: self.movies[indexPath.row])
+            return cell
+            
+        default:
+            fatalError()
+        }
     }
 }
 
@@ -155,7 +213,23 @@ extension WishListView: UITableViewDelegate {
     // MARK: - Instance Methods
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 170.0
+        switch indexPath.section {
+        case 0:
+            return 70.0
+            
+        default:
+            return 170.0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 0:
+            self.presentMediaTypePicker()
+            
+        default:
+            return
+        }
     }
 }
 

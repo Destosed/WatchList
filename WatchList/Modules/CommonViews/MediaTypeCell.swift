@@ -17,7 +17,7 @@ class MediaTypeCell: UITableViewCell {
     
     // MARK: -
     
-    var mediaType: Category? {
+    var category: Category? {
         get {
             switch mediaTypeLabel.text {
             case Category.film.rawValue:

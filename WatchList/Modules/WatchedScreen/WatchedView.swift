@@ -20,7 +20,15 @@ class WatchedView: UIViewController, WatchedViewProtocol {
     @IBOutlet private weak var tableView: UITableView!
     
     private var refreshControl = UIRefreshControl()
+    
     private var movies: [MovieInfo] = []
+    private var filteredMovies: [MovieInfo] = []
+    private var category: Category = .all {
+        didSet {
+            self.tableView.reloadSections(IndexSet(integer: 0), with: .none)
+            //TODO: - Add filtration
+        }
+    }
     
     // MARK: - Instance Methods
     
@@ -33,7 +41,29 @@ class WatchedView: UIViewController, WatchedViewProtocol {
     // MARK: -
     
     private func presentMediaTypePicker() {
+        let alertController = UIAlertController(title: "Media Type", message: nil, preferredStyle: .actionSheet)
         
+        let allAction = UIAlertAction(title: Category.all.rawValue, style: .default, handler: { _ in
+            self.category = .all
+        })
+        let filmAction = UIAlertAction(title: Category.film.rawValue, style: .default, handler: { _ in
+            self.category = .film
+        })
+        let seriesAction = UIAlertAction(title: Category.series.rawValue, style: .default, handler: { _ in
+            self.category = .series
+        })
+        let animeAction = UIAlertAction(title: Category.anime.rawValue, style: .default, handler: { _ in
+            self.category = .anime
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alertController.addAction(allAction)
+        alertController.addAction(filmAction)
+        alertController.addAction(seriesAction)
+        alertController.addAction(animeAction)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true, completion: nil)
     }
     
     private func presentMoreOptionsAlert() {
@@ -104,6 +134,7 @@ class WatchedView: UIViewController, WatchedViewProtocol {
     
     private func configureMediaTypeCell(cell: MediaTypeCell) {
         cell.selectionStyle = .none
+        cell.category = self.category
     }
     
     private func configureMediaItemCell(cell: MediaItemCell, with movie: MovieInfo) {
