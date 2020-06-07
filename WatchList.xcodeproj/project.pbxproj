@@ -37,10 +37,11 @@
 		42C3F9EF2475C9A70065D7E3 /* MediaItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42C3F9ED2475C9A70065D7E3 /* MediaItemCell.xib */; };
 		42C3F9F22475C9BA0065D7E3 /* MediaTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C3F9F02475C9BA0065D7E3 /* MediaTypeCell.swift */; };
 		42C3F9F32475C9BA0065D7E3 /* MediaTypeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42C3F9F12475C9BA0065D7E3 /* MediaTypeCell.xib */; };
-		42C3F9F52475D10D0065D7E3 /* MediaType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C3F9F42475D10D0065D7E3 /* MediaType.swift */; };
+		42C3F9F52475D10D0065D7E3 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C3F9F42475D10D0065D7E3 /* Category.swift */; };
 		42C8BAE8248BF54F000DC3BB /* Authorization.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42C8BAE7248BF54F000DC3BB /* Authorization.storyboard */; };
 		42CBC277248C7BF1001B94F5 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CBC276248C7BF1001B94F5 /* UserDefaultsManager.swift */; };
 		42CBC279248C8246001B94F5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CBC278248C8246001B94F5 /* User.swift */; };
+		42CBC27B248C9137001B94F5 /* FilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CBC27A248C9137001B94F5 /* FilterType.swift */; };
 		42E5D1A9248BFA3D00660E05 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E5D1A8248BFA3D00660E05 /* LoginView.swift */; };
 		42E5D1AC248BFB5000660E05 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E5D1AB248BFB5000660E05 /* UIApplicationExtension.swift */; };
 		42F2D295248C457000C4B0FE /* AlertServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F2D294248C457000C4B0FE /* AlertServices.swift */; };
@@ -83,10 +84,11 @@
 		42C3F9ED2475C9A70065D7E3 /* MediaItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaItemCell.xib; sourceTree = "<group>"; };
 		42C3F9F02475C9BA0065D7E3 /* MediaTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTypeCell.swift; sourceTree = "<group>"; };
 		42C3F9F12475C9BA0065D7E3 /* MediaTypeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaTypeCell.xib; sourceTree = "<group>"; };
-		42C3F9F42475D10D0065D7E3 /* MediaType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaType.swift; sourceTree = "<group>"; };
+		42C3F9F42475D10D0065D7E3 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		42C8BAE7248BF54F000DC3BB /* Authorization.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Authorization.storyboard; sourceTree = "<group>"; };
 		42CBC276248C7BF1001B94F5 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		42CBC278248C8246001B94F5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		42CBC27A248C9137001B94F5 /* FilterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterType.swift; sourceTree = "<group>"; };
 		42E5D1A8248BFA3D00660E05 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		42E5D1AB248BFB5000660E05 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		42F2D294248C457000C4B0FE /* AlertServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertServices.swift; sourceTree = "<group>"; };
@@ -278,9 +280,10 @@
 		42C3F9DD2475C1BA0065D7E3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				42C3F9F42475D10D0065D7E3 /* MediaType.swift */,
+				42C3F9F42475D10D0065D7E3 /* Category.swift */,
 				42FB275A248AF87500D1AF41 /* MovieInfo.swift */,
 				42CBC278248C8246001B94F5 /* User.swift */,
+				42CBC27A248C9137001B94F5 /* FilterType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -485,6 +488,7 @@
 				42AB38DD248BFE2B001E0D77 /* Colors.swift in Sources */,
 				42F2D295248C457000C4B0FE /* AlertServices.swift in Sources */,
 				42C3F9E62475C6CF0065D7E3 /* WatchedInteractor.swift in Sources */,
+				42CBC27B248C9137001B94F5 /* FilterType.swift in Sources */,
 				42A65667248AA597000FB01A /* MainTabbarController.swift in Sources */,
 				42A65672248AAE0D000FB01A /* RecomendationsView.swift in Sources */,
 				42C3F9F22475C9BA0065D7E3 /* MediaTypeCell.swift in Sources */,
@@ -502,7 +506,7 @@
 				428515E6248AD747007B8BD4 /* SearchCell.swift in Sources */,
 				428515E1248AD6AD007B8BD4 /* SearchView.swift in Sources */,
 				42CBC279248C8246001B94F5 /* User.swift in Sources */,
-				42C3F9F52475D10D0065D7E3 /* MediaType.swift in Sources */,
+				42C3F9F52475D10D0065D7E3 /* Category.swift in Sources */,
 				42E5D1AC248BFB5000660E05 /* UIApplicationExtension.swift in Sources */,
 				428515EA248AF39B007B8BD4 /* NetworkManager.swift in Sources */,
 				42CBC277248C7BF1001B94F5 /* UserDefaultsManager.swift in Sources */,
