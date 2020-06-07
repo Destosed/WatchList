@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PromiseKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -16,12 +17,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let _ = (scene as? UIWindowScene) else { return }
         
-        // TODO: - Check if user allready authorized
-        
-        //And if he's not...
-        let authStoryboard = UIStoryboard(name: "Authorization", bundle: nil)
-        let loginView = authStoryboard.instantiateInitialViewController() as! LoginView
-        self.window?.rootViewController = loginView
+        if let user = UserDefaultsManager.shared.getUser() {
+            firstly {
+                NetworkManager.shared.authorizeUser(login: user.login, password: user.password)
+            }.done {
+                let mainTabbarStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let tabbarController = mainTabbarStoryboard.instantiateInitialViewController() as! MainTabbarController
+                self.window?.rootViewController = tabbarController
+            }
+            
+        } else {
+            let authStoryboard = UIStoryboard(name: "Authorization", bundle: nil)
+            let loginView = authStoryboard.instantiateInitialViewController() as! LoginView
+            self.window?.rootViewController = loginView
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

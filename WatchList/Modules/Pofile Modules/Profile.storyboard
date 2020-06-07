@@ -155,7 +155,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="NA1-lC-Wi4"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Profile" id="IW5-IK-7Zl"/>
+                    <navigationItem key="navigationItem" title="Profile" id="IW5-IK-7Zl">
+                        <barButtonItem key="rightBarButtonItem" image="baseline_exit_to_app_black_48pt" id="z1j-lm-GIY">
+                            <color key="tintColor" red="0.24626243110000001" green="0.0001498431229" blue="0.73499959709999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="onLogoutButtonTouchUpInside:" destination="Ygh-bt-XJe" id="yrR-bI-aIR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="friendsAmountLabel" destination="DM6-Q2-ce5" id="KIZ-SI-f6r"/>
                         <outlet property="nestedContentView" destination="nUO-dv-jHb" id="yfT-my-ATp"/>
@@ -194,4 +201,7 @@
             <point key="canvasLocation" x="-71.014492753623188" y="184.23913043478262"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="baseline_exit_to_app_black_48pt" width="24" height="24"/>
+    </resources>
 </document>

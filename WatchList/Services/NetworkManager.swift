@@ -52,6 +52,7 @@ class NetworkManager {
                     seal.reject(error)
                     
                 case .success(let result):
+                    UserDefaultsManager.shared.saveUser(user: User(login: login, password: password))
                     
                     if let json = result as? JSON, let token: String = "token" <~~ json {
                         self.token = token

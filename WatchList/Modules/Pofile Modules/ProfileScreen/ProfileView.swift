@@ -35,6 +35,13 @@ class ProfileView: UIViewController {
     
     // MARK: - Instance Methods
     
+    @IBAction func onLogoutButtonTouchUpInside(_ sender: UIBarButtonItem) {
+        UserDefaultsManager.shared.deleteUser()
+        let authStoryboard = UIStoryboard(name: "Authorization", bundle: nil)
+        let loginView = authStoryboard.instantiateInitialViewController() as! LoginView
+        UIApplication.setRootView(loginView)
+    }
+    
     private func configureInterface() {
         self.nestedContentView.layer.cornerRadius = Constants.cornerRadius
         
