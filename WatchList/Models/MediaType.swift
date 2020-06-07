@@ -8,12 +8,11 @@
 
 import Foundation
 
-enum MediaType: String {
+enum MediaType: Int {
     
     //Enumeration Cases
     
-    case movie = "Movie"
-    case serial = "Serial"
-    case book = "Book"
-    case anime = "Anime"
+    case film
+    case series
+    case anime
 }

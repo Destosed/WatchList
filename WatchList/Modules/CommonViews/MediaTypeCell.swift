@@ -20,18 +20,15 @@ class MediaTypeCell: UITableViewCell {
     var mediaType: MediaType? {
         get {
             switch mediaTypeLabel.text {
-            case MediaType.movie.rawValue:
-                return .movie
+            case MediaType.film.rawValue:
+                return .film
                 
-            case MediaType.serial.rawValue:
-                return .serial
+            case MediaType.series.rawValue:
+                return .series
                 
             case MediaType.book.rawValue:
                 return .book
                 
-            case MediaType.anime.rawValue:
-                return .anime
-            
             default:
                 return nil
             }
