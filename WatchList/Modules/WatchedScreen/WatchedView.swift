@@ -79,7 +79,7 @@ class WatchedView: UIViewController, WatchedViewProtocol {
             
             searchController.onMovieCellSelected = { movie in
                 firstly {
-                    NetworkManager.shared.postMovie(movieID: movie.id!, note: " ", rating: 5, seen: true)
+                    NetworkManager.shared.postMovie(movieID: movie.id!, seen: true)
                 }.done {
                     self.movies.append(movie)
                     self.tableView.reloadData()

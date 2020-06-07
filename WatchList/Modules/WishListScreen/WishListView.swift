@@ -93,7 +93,7 @@ class WishListView: UIViewController {
             
             searchController.onMovieCellSelected = { movie in
                 firstly {
-                    NetworkManager.shared.postMovie(movieID: movie.id!, note: " ", rating: 5, seen: false)
+                    NetworkManager.shared.postMovie(movieID: movie.id!, seen: false)
                 }.done {
                     self.movies.append(movie)
                     self.tableView.reloadData()

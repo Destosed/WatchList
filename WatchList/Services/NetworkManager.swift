@@ -67,13 +67,9 @@ class NetworkManager {
     
     func searchMovies(with keyword: String) -> Promise<[MovieInfo]> {
         let baseURL = "https://watchlist.procrastineyaz.dev/api/kinopoisk/search"
-        
-        var headers: HTTPHeaders = ["accept": "application/json"]
-        if let token = self.token {
-            headers["Authorization"] = "Bearer \(token)"
-        }
-        
         let parameters = ["keywords" : keyword]
+        let headers: HTTPHeaders = ["accept": "application/json",
+                                    "Authorization": "Bearer \(self.token ?? "")"]
         
         return Promise<[MovieInfo]> { seal in
             Alamofire.request(baseURL, method: .get, parameters: parameters, headers: headers).responseJSON { response in
@@ -108,15 +104,14 @@ class NetworkManager {
                    searchString: String? = nil, page: Int = 1, itemsPerPage: Int = 100) -> Promise<[MovieInfo]> {
         
         let baseURL = "https://watchlist.procrastineyaz.dev/api/items"
+        
         let parameters: Parameters = ["category": category.rawValue,
                                       "filter": filterType.rawValue,
                                       "page": page,
                                       "itemsPerPage": itemsPerPage]
         
-        var headers: HTTPHeaders = ["accept": "application/json"]
-        if let token = self.token {
-            headers["Authorization"] = "Bearer \(token)"
-        }
+        let headers: HTTPHeaders = ["accept": "application/json",
+                                    "Authorization": "Bearer \(self.token ?? "")"]
         
         return Promise<[MovieInfo]> { seal in
             Alamofire.request(baseURL, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
@@ -150,15 +145,11 @@ class NetworkManager {
     func getRecomendationMovies() -> Promise<[MovieInfo]> {
         let baseURL = "https://watchlist.procrastineyaz.dev/api/recommendations"
         
-        var headers: HTTPHeaders = ["accept": "application/json"]
-        if let token = self.token {
-            headers["Authorization"] = "Bearer \(token)"
-        }
-        
-        let parameters: Parameters = [:]
+        let headers: HTTPHeaders = ["accept": "application/json",
+                                    "Authorization": "Bearer \(self.token ?? "")"]
         
         return Promise<[MovieInfo]> { seal in
-            Alamofire.request(baseURL, method: .get, parameters: parameters, headers: headers).validate().responseJSON { response in
+            Alamofire.request(baseURL, method: .get, headers: headers).validate().responseJSON { response in
                 
                 switch response.result {
                 case .failure(let error):
@@ -186,17 +177,20 @@ class NetworkManager {
         }
     }
     
-    func postMovie(movieID: Int, note: String, rating: Int, seen: Bool) -> Promise<Void> {
+    func postMovie(movieID: Int, note: String? = nil, rating: Int? = nil, seen: Bool) -> Promise<Void> {
         let baseURL = "https://watchlist.procrastineyaz.dev/api/items"
-        let parameters: Parameters = ["itemId": movieID,
-                                      "note": note,
-                                      "rating": rating,
-                                      "seen": seen]
         
-        var headers: HTTPHeaders = ["accept": "application/json"]
-        if let token = self.token {
-            headers["Authorization"] = "Bearer \(token)"
+        var parameters: Parameters = ["itemId": movieID,
+                                      "seen": seen]
+        if let rating = rating {
+            parameters["rating"] = rating
         }
+        if let note = note {
+            parameters["note"] = note
+        }
+        
+        let headers: HTTPHeaders = ["accept": "application/json",
+                                    "Authorization": "Bearer \(self.token ?? "")"]
         
         return Promise<Void> { seal in
             Alamofire.request(baseURL, method: .post, parameters: parameters, headers: headers).validate().responseJSON { response in
