@@ -143,10 +143,7 @@ class WatchedView: UIViewController, WatchedViewProtocol {
         cell.title = movie.ruName
         cell.subTitle = movie.engName
         cell.note = movie.description
-        
-        if let intRating = Int(movie.rating ?? "") {
-            cell.rating = Double(intRating)
-        }
+        cell.rating = movie.rating
         
         if let imageURL = URL(string: movie.posterURL ?? "") {
             let resource = ImageResource(downloadURL: imageURL,

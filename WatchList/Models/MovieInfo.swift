@@ -20,7 +20,7 @@ struct MovieInfo {
     let year: String?
     let description: String?
     let filmLength: String?
-    let rating: String?
+    let rating: Double?
     let genres: [String]?
     let posterURL: String?
     
