@@ -17,7 +17,8 @@ class WishListView: UIViewController {
 
     @IBOutlet private weak var tableView: UITableView!
     
-    var movies: [MovieInfo] = []
+    private var refreshControl = UIRefreshControl()
+    private var movies: [MovieInfo] = []
     
     // MARK: - Insatnce Methods
     
@@ -28,12 +29,15 @@ class WishListView: UIViewController {
     // MARK: -
     
     private func fetchMovies() {
+        self.refreshControl.beginRefreshing()
+        
         firstly {
             NetworkManager.shared.getMovies(category: .all, filterType: .wishList)
         }.done { movies in
             self.movies = movies
         }.ensure {
             self.tableView.reloadData()
+            self.refreshControl.endRefreshing()
         }.catch { error in
             AlertService.shared.showError(on: self,
                                           title: "Error",
@@ -106,12 +110,19 @@ class WishListView: UIViewController {
         }
     }
     
+    @objc func startRefreshing() {
+        self.fetchMovies()
+    }
+    
     // MARK: - UIViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.configureTableView()
+        self.refreshControl.addTarget(self, action: #selector(self.startRefreshing), for: .valueChanged)
+        self.tableView.refreshControl = self.refreshControl
+        
         self.fetchMovies()
     }
 }

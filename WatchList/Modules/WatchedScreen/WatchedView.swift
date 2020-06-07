@@ -19,9 +19,18 @@ class WatchedView: UIViewController, WatchedViewProtocol {
     
     @IBOutlet private weak var tableView: UITableView!
     
+    private var refreshControl = UIRefreshControl()
     private var movies: [MovieInfo] = []
     
     // MARK: - Instance Methods
+    
+    // MARK: -
+    
+    @IBAction private func onMoreButtonTouchUpInside(_ sender: UIBarButtonItem) {
+        self.presentMoreOptionsAlert()
+    }
+    
+    // MARK: -
     
     private func presentMediaTypePicker() {
         
@@ -61,13 +70,18 @@ class WatchedView: UIViewController, WatchedViewProtocol {
         self.present(alertController, animated: true, completion: nil)
     }
     
+    // MARK: -
+    
     private func fetchMovies() {
+        self.refreshControl.beginRefreshing()
+        
         firstly {
             NetworkManager.shared.getMovies(category: .all, filterType: .watched)
         }.done { movies in
             self.movies = movies
         }.ensure {
             self.tableView.reloadData()
+            self.refreshControl.endRefreshing()
         }.catch { error in
             AlertService.shared.showError(on: self, title: "Error", message: error.localizedDescription, complition: nil)
         }
@@ -112,10 +126,9 @@ class WatchedView: UIViewController, WatchedViewProtocol {
     
     // MARK: -
     
-    @IBAction private func onMoreButtonTouchUpInside(_ sender: UIBarButtonItem) {
-        self.presentMoreOptionsAlert()
+    @objc func startRefreshing() {
+        self.fetchMovies()
     }
-    
     
     // MARK: - UIViewController
     
@@ -123,6 +136,9 @@ class WatchedView: UIViewController, WatchedViewProtocol {
         super.viewDidLoad()
         
         self.configureTableView()
+        self.refreshControl.addTarget(self, action: #selector(self.startRefreshing), for: .valueChanged)
+        self.tableView.refreshControl = self.refreshControl
+        
         self.fetchMovies()
     }
 }
