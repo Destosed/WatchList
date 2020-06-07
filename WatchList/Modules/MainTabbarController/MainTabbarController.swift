@@ -19,7 +19,7 @@ class MainTabbarController: UITabBarController {
     private let watchedIcon = UIImage(named: "Tabbar-Home-Icon")
     private let wishListIcon = UIImage(named: "Tabbar-Home-Icon")
     private let recomendationsIcon = UIImage(named: "Tabbar-Home-Icon")
-    private let profileIcon = UIImage(named: "Tabbar-Home-Icon")
+    private let profileIcon = UIImage(named: "Tabbar-Profile-Icon")
     
     // MARK: - Instance Methods
     
