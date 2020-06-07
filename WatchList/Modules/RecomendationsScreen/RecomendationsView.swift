@@ -35,7 +35,10 @@ class RecomendationsView: UIViewController {
         }.ensure {
             self.tableView.reloadData()
         }.catch { error in
-            //TODO: -
+            AlertService.shared.showError(on: self,
+                                          title: "Error",
+                                          message: error.localizedDescription,
+                                          complition: nil)
         }
     }
     
@@ -100,6 +103,7 @@ class RecomendationsView: UIViewController {
         super.viewDidLoad()
         
         self.configureTableView()
+        self.fetchMovies()
     }
 }
 

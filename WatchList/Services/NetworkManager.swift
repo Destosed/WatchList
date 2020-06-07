@@ -105,7 +105,7 @@ class NetworkManager {
     }
     
     func getRecomendationMovies() -> Promise<[MovieInfo]> {
-        let baseURL = ""
+        let baseURL = "https://watchlist.procrastineyaz.dev/api/recommendations"
         
         var headers: HTTPHeaders = ["accept": "application/json"]
         if let token = self.token {
@@ -126,7 +126,7 @@ class NetworkManager {
                         //TODO: - Нормально обработать
                         fatalError()
                     }
-                    guard let moviesArrayJSON: [JSON] = "items" <~~ json else {
+                    guard let moviesArrayJSON: [JSON] = "rows" <~~ json else {
                         fatalError()
                     }
                     
