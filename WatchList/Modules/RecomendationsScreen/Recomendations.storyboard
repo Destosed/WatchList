@@ -10,14 +10,36 @@
         <!--Recomendations-->
         <scene sceneID="VRg-TJ-l5P">
             <objects>
-                <viewController id="F1z-tL-WkP" sceneMemberID="viewController">
+                <viewController id="F1z-tL-WkP" customClass="RecomendationsView" customModule="WatchList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BxP-Xg-rYw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Bkt-ke-I01">
+                                <rect key="frame" x="0.0" y="44" width="414" height="692"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Bkt-ke-I01" firstAttribute="leading" secondItem="zKX-c8-eGV" secondAttribute="leading" id="GZd-wd-DIj"/>
+                            <constraint firstItem="zKX-c8-eGV" firstAttribute="bottom" secondItem="Bkt-ke-I01" secondAttribute="bottom" id="OCD-x3-yBA"/>
+                            <constraint firstItem="Bkt-ke-I01" firstAttribute="top" secondItem="zKX-c8-eGV" secondAttribute="top" id="ctQ-Kp-Tdv"/>
+                            <constraint firstItem="zKX-c8-eGV" firstAttribute="trailing" secondItem="Bkt-ke-I01" secondAttribute="trailing" id="eEW-yY-Qhg"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="zKX-c8-eGV"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Recomendations" id="pZu-8i-GLi"/>
+                    <navigationItem key="navigationItem" title="Recomendations" id="pZu-8i-GLi">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="ellipsis" catalog="system" id="RTO-dU-wn4">
+                            <color key="tintColor" red="0.24626243110000001" green="0.0001498431229" blue="0.73499959709999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="onMoreButtonTouchUpInside:" destination="F1z-tL-WkP" id="5Z3-V1-Sty"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="Bkt-ke-I01" id="HFm-Lj-bA9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="agc-u2-l3Y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -31,6 +53,9 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="no3-Yu-j7E">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.24626243110000001" green="0.0001498431229" blue="0.73499959709999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -42,4 +67,7 @@
             <point key="canvasLocation" x="-33.333333333333336" y="141.84782608695653"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ellipsis" catalog="system" width="128" height="37"/>
+    </resources>
 </document>

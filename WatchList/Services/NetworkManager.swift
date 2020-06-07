@@ -102,4 +102,43 @@ class NetworkManager {
             }
         }
     }
+    
+    func getRecomendationMovies() -> Promise<[MovieInfo]> {
+        let baseURL = ""
+        
+        var headers: HTTPHeaders = ["accept": "application/json"]
+        if let token = self.token {
+            headers["Authorization"] = "Bearer \(token)"
+        }
+        
+        let parameters: Parameters = [:]
+        
+        return Promise<[MovieInfo]> { seal in
+            Alamofire.request(baseURL, method: .get, parameters: parameters, headers: headers).responseJSON { response in
+                
+                switch response.result {
+                case .failure(let error):
+                    seal.reject(error)
+                    
+                case .success(let result):
+                    guard let json = result as? JSON else {
+                        //TODO: - Нормально обработать
+                        fatalError()
+                    }
+                    guard let moviesArrayJSON: [JSON] = "items" <~~ json else {
+                        fatalError()
+                    }
+                    
+                    var movies: [MovieInfo] = []
+                    
+                    for movieJSON in moviesArrayJSON {
+                        let movieInfo = MovieInfo(json: movieJSON)
+                        movies.append(movieInfo)
+                    }
+                    
+                    seal.fulfill(movies)
+                }
+            }
+        }
+    }
 }

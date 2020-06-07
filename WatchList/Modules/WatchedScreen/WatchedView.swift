@@ -64,7 +64,6 @@ class WatchedView: UIViewController, WatchedViewProtocol {
         self.tableView.register(nibMediaItemCell, forCellReuseIdentifier: Constants.mediaItemCell)
         
         self.tableView.separatorStyle = .none
-        
     }
     
     private func configureMediaTypeCell(cell: MediaTypeCell) {
