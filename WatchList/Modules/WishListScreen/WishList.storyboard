@@ -10,14 +10,36 @@
         <!--Wish List-->
         <scene sceneID="6oj-MC-hOW">
             <objects>
-                <viewController id="1Oq-66-KkB" sceneMemberID="viewController">
+                <viewController id="1Oq-66-KkB" customClass="WishListView" customModule="WatchList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Naz-bG-Ofh">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zSA-jM-ZF7">
+                                <rect key="frame" x="0.0" y="44" width="414" height="692"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="IwA-HA-9Rc" firstAttribute="trailing" secondItem="zSA-jM-ZF7" secondAttribute="trailing" id="6ZI-Af-uMD"/>
+                            <constraint firstItem="IwA-HA-9Rc" firstAttribute="bottom" secondItem="zSA-jM-ZF7" secondAttribute="bottom" id="KMi-af-vmd"/>
+                            <constraint firstItem="zSA-jM-ZF7" firstAttribute="top" secondItem="IwA-HA-9Rc" secondAttribute="top" id="qZP-dh-gIv"/>
+                            <constraint firstItem="zSA-jM-ZF7" firstAttribute="leading" secondItem="IwA-HA-9Rc" secondAttribute="leading" id="vwD-dt-36a"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="IwA-HA-9Rc"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Wish List" id="MXL-1R-O7s"/>
+                    <navigationItem key="navigationItem" title="Wish List" id="MXL-1R-O7s">
+                        <barButtonItem key="rightBarButtonItem" image="ellipsis" catalog="system" id="lqi-Cl-oYT">
+                            <color key="tintColor" red="0.24626243110000001" green="0.0001498431229" blue="0.73499959709999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="onMoreButtonTouchUpInside:" destination="1Oq-66-KkB" id="6eX-P6-hhF"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="zSA-jM-ZF7" id="Bqk-IS-Erd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p0Y-Kn-ete" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -45,4 +67,7 @@
             <point key="canvasLocation" x="186.95652173913044" y="176.9021739130435"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ellipsis" catalog="system" width="128" height="37"/>
+    </resources>
 </document>
